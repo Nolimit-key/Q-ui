@@ -1,0 +1,129 @@
+<a-layout-sider id="sider" collapsible breakpoint="md" collapsed-width="0">
+    <a-menu theme="dark" mode="inline" :selected-keys="['{{ request.path }}']"
+            @click="({key}) => key.startsWith('http') ? window.open(key) : location.href = key">
+        <a-menu-item key="{{ url_for('v2ray.index') }}">
+            <a-icon type="dashboard"></a-icon>
+            <span>{{ _('Trạng thái') }}</span>
+        </a-menu-item>
+        <a-menu-item key="{{ url_for('v2ray.accounts') }}">
+            <a-icon type="user"></a-icon>
+            <span>{{ _('Tài khoản') }}</span>
+        </a-menu-item>
+        <a-menu-item key="{{ url_for('v2ray.setting') }}">
+            <a-icon type="setting"></a-icon>
+            <span>{{ _('Cài đặt') }}</span>
+        </a-menu-item>
+        <a-menu-item key="{{ url_for('v2ray.clients') }}">
+            <a-icon type="laptop"></a-icon>
+            <span>{{ _('Cách kết nối VPN') }}</span>
+        </a-menu-item>
+        <a-sub-menu>
+            <template slot="title">
+                <a-icon type="link"></a-icon>
+                <span>{{ _('Khác') }}</span>
+            </template>
+            <a-menu-item key="https://github.com/sprov065/v2-ui/">
+                <a-icon type="github"></a-icon>
+                <span>Github</span>
+            </a-menu-item>
+{#            <a-menu-item key="https://github.com/sprov065/v2-ui/issues">#}
+{#                <a-icon type="exception"></a-icon>#}
+{#                <span>{{ _('Báo cáo') }}</span>#}
+{#            </a-menu-item>#}
+            <a-menu-item key="{{ url_for('v2ray.tutorial') }}">
+                <a-icon type="read"></a-icon>
+                <span>{{ _('Hướng dẫn') }}</span>
+            </a-menu-item>
+	    </a-sub-menu>
+            <a-menu-item key="https://www.facebook.com/Limit5555">
+           	 <a-icon type="facebook"></a-icon>
+           	 <span>{{ _('Liên hệ tôi') }}</span>
+            </a-menu-item>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <a-menu-item key="{{ url_for('base.logout') }}">
+            <a-icon type="logout"></a-icon>
+            <span>{{ _('Đăng xuất') }}</span>
+        </a-menu-item>
+    </a-menu>
+</a-layout-sider>
+<a-drawer id="sider-drawer" placement="left" :closable="false"
+          @close="siderDrawer.close()"
+          :visible="siderDrawer.visible" :wrap-style="{ padding: 0 }">
+    <div class="drawer-handle" @click="siderDrawer.change()" slot="handle">
+        <a-icon :type="siderDrawer.visible ? 'close' : 'menu-fold'"></a-icon>
+    </div>
+    <a-menu theme="light" mode="inline" :selected-keys="['{{ request.path }}']"
+        @click="({key}) => key.startsWith('http') ? window.open(key) : location.href = key">
+        <a-menu-item key="{{ url_for('v2ray.index') }}">
+            <a-icon type="dashboard"></a-icon>
+            <span>{{ _('Trạng thái') }}</span>
+        </a-menu-item>
+        <a-menu-item key="{{ url_for('v2ray.accounts') }}">
+            <a-icon type="user"></a-icon>
+            <span>{{ _('Tài khoản') }}</span>
+        </a-menu-item>
+        <a-menu-item key="{{ url_for('v2ray.setting') }}">
+            <a-icon type="setting"></a-icon>
+            <span>{{ _('Cài đặt') }}</span>
+        </a-menu-item>
+        <a-menu-item key="{{ url_for('v2ray.clients') }}">
+            <a-icon type="laptop"></a-icon>
+            <span>{{ _('Khách hàng') }}</span>
+        </a-menu-item>
+        <a-sub-menu>
+            <template slot="title">
+                <a-icon type="link"></a-icon>
+                <span>{{ _('Khác') }}</span>
+            </template>
+            <a-menu-item key="https://github.com/sprov065/v2-ui/">
+                <a-icon type="github"></a-icon>
+                <span>Github</span>
+            </a-menu-item>
+{#            <a-menu-item key="https://github.com/sprov065/v2-ui/issues">#}
+{#                <a-icon type="exception"></a-icon>#}
+{#                <span>{{ _('Báo cáo') }}</span>#}
+{#            </a-menu-item>#}
+            <a-menu-item key="{{ url_for('v2ray.tutorial') }}">
+                <a-icon type="read"></a-icon>
+                <span>{{ _('Hướng dẫn') }}</span>
+            </a-menu-item>
+        </a-sub-menu>
+{#        <a-menu-item key="{{  url_for('v2ray.donate') }}">#}
+{#            <a-icon type="like"></a-icon>#}
+{#            <span>{{ _('Ủng hộ tôi') }}</span>#}
+{#        </a-menu-item>#}
+        <a-menu-item key="{{ url_for('base.logout') }}">
+            <a-icon type="logout"></a-icon>
+            <span>{{ _('Đăng xuất') }}</span>
+        </a-menu-item>
+    </a-menu>
+</a-drawer>
+<script>
+
+    const siderDrawer = {
+        visible: false,
+        show() {
+            this.visible = true;
+        },
+        close() {
+            this.visible = false;
+        },
+        change() {
+            this.visible = !this.visible;
+        }
+    };
+
+</script>
