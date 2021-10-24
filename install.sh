@@ -83,7 +83,7 @@ install_x-ui() {
     systemctl stop q-ui
     cd /usr/local/
 
-    wget -N --no-check-certificate -O /usr/local/q-ui-linux.tar.gz https://github.com/Nolimit-key/Q-ui/releases/download/q-ui-vh-5.4.7/q-ui-linux.tar.gz
+    wget -N --no-check-certificate -O /usr/local/q-ui-linux.tar.gz https://github.com/Nolimit-key/v2-ui_viet_hoa/releases/download/q-ui-vh-5.4.7/q-ui-linux.tar.gz
 
 
     if [[ -e /usr/local/q-ui/ ]]; then
@@ -93,37 +93,65 @@ install_x-ui() {
     tar zxvf q-ui-linux.tar.gz
     rm q-ui-linux.tar.gz -f
     cd q-ui
-    chmod +x q-ui bin/v2ray-v2-ui q-ui.sh
+    chmod +x bin/v2ray-v2-ui q-ui.sh
+    chmod +x /usr/local/q-ui/v2-ui
     cp -f q-ui.service /etc/systemd/system/
     cp -f q-ui.sh /usr/bin/q-ui
     systemctl daemon-reload
     systemctl enable q-ui
     systemctl start q-ui
-    echo -e "${green}q-ui v${last_version}${plain} Quá trình cài đặt hoàn tất và bảng điều khiển đã bắt đầu，"
-    echo -e ""
-    echo -e "Nếu đó là cài đặt mới, cổng web mặc định là ${green}65432${plain}，Tên người dùng và mật khẩu đều theo mặc định là ${green}admin${plain}"
-    echo -e "Hãy đảm bảo rằng cổng này không bị các chương trình khác chiếm giữ，${yellow}Và đảm bảo rằng cổng 65432 đã được mở port ${plain}"
-#    echo -e "Nếu bạn muốn sửa đổi 54321 thành một cổng khác, hãy nhập lệnh x-ui để sửa đổi và cũng đảm bảo rằng cổng đã sửa đổi cũng được phép mở port"
-    echo -e ""
-    echo -e "Nếu đó là để cập nhật bảng điều khiển, hãy truy cập bảng điều khiển như bạn đã làm trước đây"
-    echo -e ""
-    echo -e "Cách sử dụng tập lệnh quản lý x-ui: "
-    echo -e "----------------------------------------------"
-    echo -e "q-ui              - Hiện menu Q-ui"
-    echo -e "q-ui start        - Khởi chạy bảng điều khiển Q-ui"
-    echo -e "q-ui stop         - Dừng bảng điều khiển Q-ui"
-    echo -e "q-ui restart      - Khởi động lại bảng điều khiển Q-ui"
-    echo -e "q-ui status       - Xem trạng thái Q-ui"
-    echo -e "q-ui enable       - Cho phép q-ui tự chạy khi mở máy"
-    echo -e "q-ui disable      - Không cho phép tự khởi chạy Q-ui"
-    echo -e "q-ui log          - Xem file log"
-    echo -e "q-ui q-ui         - Di chuyển dữ liệu Q-ui"
-    echo -e "q-ui update       - Cập nhật Q-ui"
-    echo -e "q-ui install      - Cài đặt lại Q-ui"
-    echo -e "q-ui uninstall    - Xoá bảng Q-ui"
-    echo -e "----------------------------------------------"
-}
+    clear
+    echo -e "               \033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+    echo -e "               \E[41;1;37m                      Q-UI                       \E[0m"
+    echo -e "               \033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+#    echo -e "               \033[0;35mIP: `hostname -I`\033[0m"
+    echo -e "                   \033[1;37m                        Tác giả : \033[0;32mN\033[0;33mo\033[0;35ml\033[1;36mi\033[0;37mm\033[1;33mi\033[1;31mt\033[1;32m-\033[1;33mk\033[1;34me\033[1;35my\033[1;31m"
+    echo ""
+#    echo -e "               \033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 
+
+    echo ""
+    echo -e "               [\033[1;36m•\033[1;31m] \033[1;37m\033[1;33mĐã cài đặt xong q-ui \033[1;31m
+               [\033[1;36m•\033[1;31m] \033[1;37m\033[1;33mTruy cập  ${green}http://`hostname -I`:65432${plain}\033[1;31m
+               [\033[1;36m•\033[1;31m] \033[1;37m\033[1;33mTên tài khoản và mật khẩu  mặc định là ${green}admin${plain} \033[1;31m
+               [\033[1;36m•\033[1;31m] \033[1;37m\033[1;33mBấm lệnh q-ui để hiện menu \033[1;31m"
+    echo ""
+#    echo -e "               \033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+    echo -e "               \033[0;34m*************************************************\033[0m"
+    echo -e "               \E[41;1;37mCần hỗ trợ hoặc thuê vps liên hệ zalo: 0865493083 \E[0m"
+    echo -e "               \033[0;34m*************************************************\033[0m"
+
+#    echo -e "${green}Đã cài đặt xong q-ui ${last_version}${plain}"
+#    echo -e "---------------------------------------------------------------------"
+#    echo -e ""
+#    echo -e "Hãy truy cập web theo địa chỉ  ${green}http://ipvps:65432${plain} "
+#    echo -e "Tên tài khoản và mật khẩu  mặc định là ${green}admin${plain}"
+#    echo -e "Bấm lệnh q-ui để hiện menu"
+#    echo -e ""
+#    echo -e "---------------------------------------------------------------------"
+#    echo -e "Hãy đảm bảo rằng cổng này không bị các chương trình khác chiếm giữ，${yellow}Và đảm bảo rằng cổng 65432 đã được mở port ${plain}"
+#    echo -e "Nếu bạn muốn sửa đổi 54321 thành một cổng khác, hãy nhập lệnh x-ui để sửa đổi và cũng đảm bảo rằng cổng đã sửa đổi cũng được phép mở port"
+#    echo -e ""
+#    echo -e "Nếu đó là để cập nhật bảng điều khiển, hãy truy cập bảng điều khiển như bạn đã làm trước đây"
+#    echo -e ""
+#    echo -e "Cách sử dụng tập lệnh quản lý x-ui: "
+#    echo -e "----------------------------------------------"
+#    echo -e "q-ui              - Hiện menu Q-ui"
+#    echo -e "q-ui start        - Khởi chạy bảng điều khiển Q-ui"
+#    echo -e "q-ui stop         - Dừng bảng điều khiển Q-ui"
+#    echo -e "q-ui restart      - Khởi động lại bảng điều khiển Q-ui"
+#    echo -e "q-ui status       - Xem trạng thái Q-ui"
+#    echo -e "q-ui enable       - Cho phép q-ui tự chạy khi mở máy"
+#    echo -e "q-ui disable      - Không cho phép tự khởi chạy Q-ui"
+#    echo -e "q-ui log          - Xem file log"
+#    echo -e "q-ui q-ui         - Di chuyển dữ liệu Q-ui"
+#    echo -e "q-ui update       - Cập nhật Q-ui"
+#    echo -e "q-ui install      - Cài đặt lại Q-ui"
+#    echo -e "q-ui uninstall    - Xoá bảng Q-ui"
+#    echo -e "----------------------------------------------"
+}
+clear
 echo -e "${green}bắt đầu cài đặt${plain}"
+sleep 4
 install_base
 install_x-ui $1
