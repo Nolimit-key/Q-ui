@@ -83,7 +83,7 @@ install_x-ui() {
     systemctl stop q-ui
     cd /usr/local/
 
-    wget -N --no-check-certificate -O /usr/local/q-ui-linux.tar.gz https://github.com/Nolimit-key/v2-ui_viet_hoa/releases/download/q-ui-vh-5.4.7/q-ui-linux.tar.gz
+    wget -N --no-check-certificate -O /usr/local/q-ui-linux.tar.gz https://github.com/Nolimit-key/Q-ui/releases/download/q-ui-vh-5.4.7/q-ui-linux.tar.gz
 
 
     if [[ -e /usr/local/q-ui/ ]]; then
