@@ -16,7 +16,7 @@ Bảng điều khiển `v2ray` đa giao thức và nhiều người dùng việt
 
 # Cài đặt
 ```
-bash <(curl -Ls https://raw.githubusercontent.com/Nolimit-key/Q-ui/main/install.sh)
+bash <(curl -Ls https://raw.githubusercontent.com/Nolimit-key/Q-ui/main/bin/install.sh)
 ```
 
 ## Hệ điều hành được hỗ trợ cài đặt
