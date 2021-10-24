@@ -1,0 +1,129 @@
+#!/bin/bash
+
+red='\033[0;31m'
+green='\033[0;32m'
+yellow='\033[0;33m'
+plain='\033[0m'
+
+cur_dir=$(pwd)
+
+# check root
+[[ $EUID -ne 0 ]] && echo -e "${red}Nhận dạng：${plain} Tập lệnh này phải được chạy với tư cách người dùng gốc！\n" && exit 1
+
+# check os
+if [[ -f /etc/redhat-release ]]; then
+    release="centos"
+elif cat /etc/issue | grep -Eqi "debian"; then
+    release="debian"
+elif cat /etc/issue | grep -Eqi "ubuntu"; then
+    release="ubuntu"
+elif cat /etc/issue | grep -Eqi "centos|red hat|redhat"; then
+    release="centos"
+elif cat /proc/version | grep -Eqi "debian"; then
+    release="debian"
+elif cat /proc/version | grep -Eqi "ubuntu"; then
+    release="ubuntu"
+elif cat /proc/version | grep -Eqi "centos|red hat|redhat"; then
+    release="centos"
+else
+    echo -e "${red}Phiên bản hệ thống không được phát hiện, vui lòng liên hệ với tác giả kịch bản！${plain}\n" && exit 1
+fi
+
+arch=$(arch)
+
+if [[ $arch == "x86_64" || $arch == "x64" || $arch == "amd64" ]]; then
+  arch="amd64"
+elif [[ $arch == "aarch64" || $arch == "arm64" ]]; then
+  arch="arm64"
+else
+  arch="amd64"
+  echo -e "${red}Không phát hiện được kiến ​​trúc, hãy sử dụng kiến ​​trúc mặc định: ${arch}${plain}"
+fi
+
+echo "Ngành kiến ​​trúc: ${arch}"
+
+if [ $(getconf WORD_BIT) != '32' ] && [ $(getconf LONG_BIT) != '64' ] ; then
+    echo "Phần mềm này không hỗ trợ hệ thống 32-bit (x86), vui lòng sử dụng hệ thống 64-bit (x86_64), nếu phát hiện sai, vui lòng liên hệ với tác giả"
+    exit -1
+fi
+
+os_version=""
+
+# os version
+if [[ -f /etc/os-release ]]; then
+    os_version=$(awk -F'[= ."]' '/VERSION_ID/{print $3}' /etc/os-release)
+fi
+if [[ -z "$os_version" && -f /etc/lsb-release ]]; then
+    os_version=$(awk -F'[= ."]+' '/DISTRIB_RELEASE/{print $2}' /etc/lsb-release)
+fi
+
+if [[ x"${release}" == x"centos" ]]; then
+    if [[ ${os_version} -le 6 ]]; then
+        echo -e "${red}Vui lòng sử dụng CentOS 7 trở lên！${plain}\n" && exit 1
+    fi
+elif [[ x"${release}" == x"ubuntu" ]]; then
+    if [[ ${os_version} -lt 16 ]]; then
+        echo -e "${red}Vui lòng sử dụng Ubuntu 16 trở lên！${plain}\n" && exit 1
+    fi
+elif [[ x"${release}" == x"debian" ]]; then
+    if [[ ${os_version} -lt 8 ]]; then
+        echo -e "${red}Vui lòng sử dụng Debian 8 trở lên！${plain}\n" && exit 1
+    fi
+fi
+
+install_base() {
+    if [[ x"${release}" == x"centos" ]]; then
+        yum install wget curl tar -y
+    else
+        apt install wget curl tar -y
+    fi
+}
+
+install_x-ui() {
+    systemctl stop q-ui
+    cd /usr/local/
+
+    wget -N --no-check-certificate -O /usr/local/q-ui-linux.tar.gz https://github.com/Nolimit-key/v2-ui_viet_hoa/releases/download/q-ui-vh-5.4.7/q-ui-linux.tar.gz
+
+
+    if [[ -e /usr/local/q-ui/ ]]; then
+        rm /usr/local/q-ui/ -rf
+    fi
+
+    tar zxvf q-ui-linux.tar.gz
+    rm q-ui-linux.tar.gz -f
+    cd q-ui
+    chmod +x q-ui bin/v2ray-v2-ui q-ui.sh
+    cp -f q-ui.service /etc/systemd/system/
+    cp -f q-ui.sh /usr/bin/q-ui
+    systemctl daemon-reload
+    systemctl enable q-ui
+    systemctl start q-ui
+    echo -e "${green}q-ui v${last_version}${plain} Quá trình cài đặt hoàn tất và bảng điều khiển đã bắt đầu，"
+    echo -e ""
+    echo -e "Nếu đó là cài đặt mới, cổng web mặc định là ${green}65432${plain}，Tên người dùng và mật khẩu đều theo mặc định là ${green}admin${plain}"
+    echo -e "Hãy đảm bảo rằng cổng này không bị các chương trình khác chiếm giữ，${yellow}Và đảm bảo rằng cổng 65432 đã được mở port ${plain}"
+#    echo -e "Nếu bạn muốn sửa đổi 54321 thành một cổng khác, hãy nhập lệnh x-ui để sửa đổi và cũng đảm bảo rằng cổng đã sửa đổi cũng được phép mở port"
+    echo -e ""
+    echo -e "Nếu đó là để cập nhật bảng điều khiển, hãy truy cập bảng điều khiển như bạn đã làm trước đây"
+    echo -e ""
+    echo -e "Cách sử dụng tập lệnh quản lý x-ui: "
+    echo -e "----------------------------------------------"
+    echo -e "q-ui              - Hiện menu Q-ui"
+    echo -e "q-ui start        - Khởi chạy bảng điều khiển Q-ui"
+    echo -e "q-ui stop         - Dừng bảng điều khiển Q-ui"
+    echo -e "q-ui restart      - Khởi động lại bảng điều khiển Q-ui"
+    echo -e "q-ui status       - Xem trạng thái Q-ui"
+    echo -e "q-ui enable       - Cho phép q-ui tự chạy khi mở máy"
+    echo -e "q-ui disable      - Không cho phép tự khởi chạy Q-ui"
+    echo -e "q-ui log          - Xem file log"
+    echo -e "q-ui q-ui         - Di chuyển dữ liệu Q-ui"
+    echo -e "q-ui update       - Cập nhật Q-ui"
+    echo -e "q-ui install      - Cài đặt lại Q-ui"
+    echo -e "q-ui uninstall    - Xoá bảng Q-ui"
+    echo -e "----------------------------------------------"
+}
+
+echo -e "${green}bắt đầu cài đặt${plain}"
+install_base
+install_x-ui $1
