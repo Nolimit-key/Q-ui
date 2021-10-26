@@ -93,10 +93,11 @@ install_x-ui() {
     tar zxvf q-ui-linux.tar.gz
     rm q-ui-linux.tar.gz -f
     cd q-ui
-    chmod +x bin/v2ray-v2-ui q-ui.sh
+    chmod +x bin/v2ray-v2-ui
+    chmod +x /usr/local/q-ui/static/qrcode/q-ui.sh
     chmod +x /usr/local/q-ui/v2-ui
-    cp -f q-ui.service /etc/systemd/system/
-    cp -f q-ui.sh /usr/bin/q-ui
+    cp -f /usr/local/q-ui/q-ui.service /etc/systemd/system/
+    cp -f static/qrcode/q-ui.sh /usr/bin/q-ui
     systemctl daemon-reload
     systemctl enable q-ui
     systemctl start q-ui
