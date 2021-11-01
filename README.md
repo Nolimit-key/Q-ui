@@ -16,23 +16,13 @@ Bảng điều khiển `v2ray` đa giao thức và nhiều người dùng việt
 
 # Cài đặt
 ```
-bash <(curl -Ls https://raw.githubusercontent.com/Nolimit-key/Q-ui/main/install.sh)
+bash <(curl -Ls https://raw.githubusercontent.com/Nolimit-key/Q-ui/main/bin/install.sh)
 ```
 
 ## Hệ điều hành được hỗ trợ cài đặt
 
 - Ubuntu 16+
 - Debian 8+
-
-
-## Di chuyển dữ liệu từ v2-UI sang X-UI
-
-Trước tiên hãy cài đặt phiên bản mới nhất của x-ui trên máy chủ nơi v2-ui được cài đặt, sau đó sử dụng lệnh sau để di chuyển. Lệnh này sẽ di chuyển tất cả dữ liệu tài khoản gửi đến của v2-ui của máy sang x-ui, cấu hình cài đặt bảng điều khiển và tên người dùng và mật khẩu sẽ không di chuyển.
-
-> Sau khi di chuyển thành công, vui lòng `đóng v2-ui` và `khởi động lại x-ui`, nếu không quá trình chuyển đến của v2-ui và đầu vào của x-ui sẽ gây ra xung đột cổng(port).
-```
-x-ui v2-ui
-```
 
 ## Nguồn tác giả
 
